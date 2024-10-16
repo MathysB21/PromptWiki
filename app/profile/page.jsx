@@ -21,7 +21,6 @@ const MyProfile = () => {
     
         if (session?.user.id) {
             fetchPosts()
-            // console.log("Data in page: ", posts)
         }
     }, [session?.user.id])
 
