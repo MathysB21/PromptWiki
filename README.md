@@ -1,7 +1,7 @@
 # PromptWiki
 Wiki for cool prompts. Create an account, share prompts and have access to hundreds of well thought-out prompts at your fingertips.
 
-Disclaimer: I built this as a project following the guidance of JSMastery on YouTube. All of the code was manually typed, nothing was pulled or copied as this was an exercise to learn React and Next.JS. I, of course, added my own spice to the project by adding better search functionality, styling, favouriting and multiple tags allowed as features to this project to further demonstrate my understanding and sharpen my skills.
+Disclaimer: I built this as a project by following the guidance of JSMastery on YouTube. All of the code was manually typed, nothing was pulled or copied as this was an exercise to learn React and Next.JS. I, of course, added my own spice to the project by adding better search functionality, styling, favouriting and multi-tagging as features and extras to further demonstrate my understanding and sharpen my skills.
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 

@@ -18,7 +18,7 @@ function RootLayout({ children }) {
                 </div>
                 <main className='app'>
                     <Nav />
-                    <div className="pt-[70px]"> {/* Adjust this padding based on Nav height */}
+                    <div className="pt-[70px]">
                         {children}
                     </div>
                 </main>
