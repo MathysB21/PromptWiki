@@ -4,14 +4,13 @@ import Link from "next/link"
 import Image from "next/image"
 import { useState, useEffect } from "react"
 import { signIn, signOut, useSession, getProviders } from 'next-auth/react'
-import { useRouter } from "next/navigation"
 
 const Nav = () => {
   const { data: session } = useSession();
-  const router = useRouter();
 
   const [providers, setProviders] = useState(null)
   const [toggleDropdown, setToggleDropdown] = useState(false)
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -24,8 +23,28 @@ const Nav = () => {
     signOut({ callbackUrl: '/' })
   }
 
+  useEffect(() => {
+    const handleScroll = () => {
+      // Set the threshold for when the background should change
+      const scrollY = window.scrollY;
+      if (scrollY > 50) {
+        setScrolled(true);  // Add glassmorphic style when scrolled
+      } else {
+        setScrolled(false);  // Keep it transparent before scroll
+      }
+    };
+
+    // Add event listener on scroll
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      // Clean up event listener on component unmount
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
-    <nav className="flex-between w-full mb-16 pt-3">
+    <nav className={`fixed top-0 left-0 right-0 z-50 flex-between w-full mb-16 py-3 px-5 transition-all duration-300 ${scrolled ? 'bg-white/70 backdrop-blur-lg shadow-lg' : 'bg-transparent'}`}>
       <Link href="/" className="flex gap-2 flex-center" >
         <Image
           src="/assets/images/logo.svg"
