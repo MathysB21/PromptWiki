@@ -1,5 +1,4 @@
 import { connectToDB } from "@utils/database";
-import Prompt from "@models/prompt";
 import User from "@models/user";
 
 // These params get populated when you pass dynamic args in the path
@@ -18,8 +17,6 @@ export const GET = async (request, { params }) => {
         if (!user.favourites) {
             return new Response("No favourites found for this user", { status: 204 })
         }
-
-        // const prompts = await Prompt.find({ creator: params.id }).populate('creator');
 
         return new Response(JSON.stringify(user.favourites), { status: 200 })
     } catch (error) {

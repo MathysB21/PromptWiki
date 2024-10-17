@@ -9,18 +9,29 @@ import { usePathname, useRouter } from "next/navigation"
 import { StarIcon as StarIconOutline } from "@heroicons/react/24/outline"
 import { StarIcon as StarIconSolid } from "@heroicons/react/24/solid"
 
-const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
+const PromptCard = ({ post, favourited, handleTagClick, handleEdit, handleDelete }) => {
   const { data: session } = useSession();
   const pathName = usePathname();
   const router = useRouter();
 
   const [copy, setCopy] = useState('')
-  const [favourite, setFavourite] = useState(false)
+  const [favourite, setFavourite] = useState(favourited || false)
 
-  const handleStar = () => {
-    setFavourite(true)
+  const handleStar = async () => {
+    try {
+      const response = await fetch(`/api/users/${session?.user.id}/favourite`, {
+        method: "PATCH",
+        body: JSON.stringify({
+          promptId: post._id
+        })
+      })
 
-    setTimeout(() => setFavourite(false), 3000);
+      if (response.ok) {
+        setFavourite(!favourite)
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   const handleCopy = () => {
@@ -57,7 +68,7 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
               {post.creator.username}
             </h3>
             <p className="font-inter text-sm text-gray-500">
-              {post.creator.email.replace(/(.{2})(.*)(?=@)/, "$1***")}
+              {post.creator.email?.replace(/(.{2})(.*)(?=@)/, "$1***")}
             </p>
           </div>
         </div>
@@ -77,6 +88,7 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
           {/* Copy */}
           <div className="copy_btn" onClick={handleCopy}>
             <Image
+              alt="Copy button"
               src={copy === post.prompt ? '/assets/icons/tick.svg' : '/assets/icons/copy.svg' }
               width={12}
               height={12}

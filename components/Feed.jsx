@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from 'react'
+import { useSession } from 'next-auth/react'
 
 import PromptCard from './PromptCard'
 
@@ -19,7 +20,11 @@ const PromptCardList = ({ data, handleTagClick }) => {
 }
 
 const Feed = () => {
+  const { data: session } = useSession()
+
+  // Data constants
   const [posts, setPosts] = useState([])
+  const [favourites, setFavourites] = useState([])
 
   // Search states
   const [searchText, setSearchText] = useState('')
@@ -66,14 +71,26 @@ const Feed = () => {
     setPosts(data)
   }
 
+  const fetchUserFavourites = async () => {
+    const response = await fetch(`/api/users/${session?.user.id}/favourites`);
+    const data = await response.json()
+
+    setFavourites(data)
+  }
+
+  // Run when the feed object is mounted
   useEffect(() => {
-    fetchPosts();
-  }, [])
+    if (session?.user.id) {
+      fetchUserFavourites();
+      fetchPosts();
+    }
+  }, [session?.user.id])
 
   return (
     <section className='feed'>
       <form className='relative w-full flex-center'>
         <input
+          id='searchBox'
           type='text'
           placeholder='Search for a phrase, tag or username'
           value={searchText}

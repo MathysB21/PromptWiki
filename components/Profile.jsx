@@ -15,10 +15,11 @@ const Profile = ({ name, desc, data, favourites, handleEdit, handleDelete }) => 
             <span className="orange_gradient">My favourites</span>
           </h2>
           <div className='mt-10 prompt_layout'>
-            {favourites.map((post) => (
+            {favourites.map((post, index) => (
               <PromptCard
-                key={post._id}
+                key={index}
                 post={post}
+                favourited={true}
                 handleEdit={() => handleEdit && handleEdit(post)}
                 handleDelete={() => handleDelete && handleDelete(post)}
               />
@@ -35,6 +36,7 @@ const Profile = ({ name, desc, data, favourites, handleEdit, handleDelete }) => 
         {data && data.map((post) => (
           <PromptCard
             key={post._id}
+            favourited={favourites.includes(post._id)}
             post={post}
             handleEdit={() => handleEdit && handleEdit(post)}
             handleDelete={() => handleDelete && handleDelete(post)}
