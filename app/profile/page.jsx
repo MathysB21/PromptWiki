@@ -10,6 +10,7 @@ const MyProfile = () => {
     const { data: session } = useSession()
     const router = useRouter();
     const [posts, setPosts] = useState('')
+    const [favourites, setFavourites] = useState('')
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -18,9 +19,17 @@ const MyProfile = () => {
             
           setPosts(data)
         }
+
+        const fetchFavourites = async () => {
+          const response = await fetch(`/api/users/${session?.user.id}/favourites`);
+          const data = await response.json()
+            
+          setFavourites(data)
+        }
     
         if (session?.user.id) {
-            fetchPosts()
+            fetchPosts();
+            fetchFavourites();
         }
     }, [session?.user.id])
 
@@ -51,6 +60,7 @@ const MyProfile = () => {
             name="My"
             desc="Welcome to your personal profile page"
             data={posts}
+            favourites={favourites}
             handleEdit={handleEdit}
             handleDelete={handleDelete}
         />
