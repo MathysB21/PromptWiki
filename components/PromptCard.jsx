@@ -5,12 +5,23 @@ import Image from "next/image"
 import { useSession } from "next-auth/react"
 import { usePathname, useRouter } from "next/navigation"
 
+// Icon imports, damn React for this, hopefully I at least gain performance
+import { StarIcon as StarIconOutline } from "@heroicons/react/24/outline"
+import { StarIcon as StarIconSolid } from "@heroicons/react/24/solid"
+
 const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
   const { data: session } = useSession();
   const pathName = usePathname();
   const router = useRouter();
 
   const [copy, setCopy] = useState('')
+  const [favourite, setFavourite] = useState(false)
+
+  const handleStar = () => {
+    setFavourite(true)
+
+    setTimeout(() => setFavourite(false), 3000);
+  }
 
   const handleCopy = () => {
     setCopy(post.prompt)
@@ -51,12 +62,26 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
           </div>
         </div>
 
-        <div className="copy_btn" onClick={handleCopy}>
-          <Image 
-            src={copy === post.prompt ? '/assets/icons/tick.svg' : '/assets/icons/copy.svg' }
-            width={12}
-            height={12}
-          />
+        {/* Container for copy and star */}
+        <div className="flex gap-2">
+
+          {/* Favourite/Star */}
+          <div className="copy_btn" onClick={handleStar}>
+            {favourite ? (
+              <StarIconSolid className="size-3 text-yellow-500"/>
+            ) : (
+              <StarIconOutline className="size-3 text-gray-500" />
+            )}
+          </div>
+
+          {/* Copy */}
+          <div className="copy_btn" onClick={handleCopy}>
+            <Image
+              src={copy === post.prompt ? '/assets/icons/tick.svg' : '/assets/icons/copy.svg' }
+              width={12}
+              height={12}
+            />
+          </div>
         </div>
       </div>
 
