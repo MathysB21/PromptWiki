@@ -24,7 +24,6 @@ const Feed = () => {
 
   // Data constants
   const [posts, setPosts] = useState([])
-  const [favourites, setFavourites] = useState([])
 
   // Search states
   const [searchText, setSearchText] = useState('')
@@ -65,23 +64,33 @@ const Feed = () => {
   }
 
   const fetchPosts = async () => {
-    const response = await fetch('/api/prompt');
-    const data = await response.json()
-
-    setPosts(data)
-  }
-
-  const fetchUserFavourites = async () => {
-    const response = await fetch(`/api/users/${session?.user.id}/favourites`);
-    const data = await response.json()
-
-    setFavourites(data)
-  }
+    try {
+      const response = await fetch('/api/prompt');
+      const postsData = await response.json();
+      
+      // Fetch user favourites after fetching posts
+      const userFavsResponse = await fetch(`/api/users/${session?.user.id}/favourites`);
+      const favouritesData = await userFavsResponse.json();
+      
+      // Map over posts and add `favourite` key
+      const updatedPosts = postsData.map(post => ({
+        ...post,
+        favourite: favouritesData.some(fav => fav._id === post._id) // Check if post._id is in favourites array
+      }));
+      
+      console.log("Updated Posts: ", updatedPosts);
+      console.log("Favourites: ", favouritesData);
+  
+      // Set the posts with the updated favourite key
+      setPosts(updatedPosts);
+    } catch (error) {
+      console.error('Error fetching posts or favourites:', error);
+    }
+  };
 
   // Run when the feed object is mounted
   useEffect(() => {
     if (session?.user.id) {
-      fetchUserFavourites();
       fetchPosts();
     }
   }, [session?.user.id])

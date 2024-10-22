@@ -9,16 +9,17 @@ import { usePathname, useRouter } from "next/navigation"
 import { StarIcon as StarIconOutline } from "@heroicons/react/24/outline"
 import { StarIcon as StarIconSolid } from "@heroicons/react/24/solid"
 
-const PromptCard = ({ post, favourited, handleTagClick, handleEdit, handleDelete }) => {
+const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
   const { data: session } = useSession();
   const pathName = usePathname();
   const router = useRouter();
 
   const [copy, setCopy] = useState('')
-  const [favourite, setFavourite] = useState(favourited || false)
+  const [favourite, setFavourite] = useState(post.favourite || false)
 
   const handleStar = async () => {
     try {
+      setFavourite(!favourite)
       const response = await fetch(`/api/users/${session?.user.id}/favourite`, {
         method: "PATCH",
         body: JSON.stringify({
@@ -26,11 +27,9 @@ const PromptCard = ({ post, favourited, handleTagClick, handleEdit, handleDelete
         })
       })
 
-      if (response.ok) {
-        setFavourite(!favourite)
-      }
     } catch (error) {
       console.log(error)
+      setFavourite(!favourite)
     }
   }
 

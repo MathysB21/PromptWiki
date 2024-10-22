@@ -12,9 +12,9 @@ const Profile = ({ name, desc, data, favourites, handleEdit, handleDelete }) => 
       {favourites && favourites.length !== 0 && (
         <>
           <h2 className="text-left text-3xl block mt-10">
-            <span className="orange_gradient">My favourites</span>
+            <span className="orange_gradient">My Favourites</span>
           </h2>
-          <div className='mt-10 prompt_layout'>
+          <div className='prompt_layout'>
             {favourites.map((post, index) => (
               <PromptCard
                 key={index}
