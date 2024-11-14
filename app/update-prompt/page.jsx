@@ -13,7 +13,7 @@ const EditPrompt = () => {
     const [submitting, setSubmitting] = useState(false)
     const [post, setPost] = useState({
         prompt: '',
-        tag: ''
+        tags: ''
     })
 
     useEffect(() => {
@@ -24,7 +24,7 @@ const EditPrompt = () => {
 
             setPost({
                 prompt: data.prompt,
-                tag: data.tag
+                tags: data.tags.join(' #')
             })
         }
 
@@ -38,11 +38,12 @@ const EditPrompt = () => {
         if (!promptId) return alert("Prompt ID not found")
 
         try {
+            const formattedTags = post.tags.split('#').map(tag => tag.trim()).filter(tag => tag !== '').map(tag =>`#${tag}`);
             const response = await fetch(`/api/prompt/${promptId}`, {
                 method: "PATCH",
                 body: JSON.stringify({
                     prompt: post.prompt,
-                    tag: post.tag
+                    tags: formattedTags
                 })
             })
 

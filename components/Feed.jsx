@@ -106,15 +106,14 @@ const Feed = () => {
     setIsAlertOpen(open)
   }
 
-  const filterPrompts = (searchtext) => {
-    const regex = RegExp(searchtext, 'i') // i flag makes this case-insensitive
-
-    return posts.filter(
-      (post) =>
-        regex.test(post.creator.username) ||
-        regex.test(post.tag) ||
-        regex.test(post.prompt)
-    )
+  const filterPrompts = (searchtext) => { 
+    const regex = RegExp(searchtext, 'i') 
+    return posts.filter( 
+      (post) => 
+      regex.test(post.creator.username) || 
+      post.tags.some(tag => regex.test(tag)) || 
+      regex.test(post.prompt) 
+    ) 
   }
 
   const fetchData = async () => {
