@@ -7,7 +7,13 @@ export const GET = async (request, { params }) => {
         await connectToDB();
 
         // Get all the favourites (promptIds) from the user's data
-        const user = await User.findById(params.id).populate('favourites')
+        const user = await User.findById(params.id).populate({
+            path: 'favourites',
+            populate: {
+                path: 'creator', // Populate the creator field within each favourite prompt
+                model: 'User',   // Specify the model to populate (optional if schema is clear)
+            }
+        });
 
         if (!user) {
             return new Response("User not found", { status: 404 })
