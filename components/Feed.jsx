@@ -3,9 +3,10 @@
 import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 
-import PromptCard from './PromptCard'
+import PromptCard from './PromptCard';
+import SignInDialog from './SignInDialog';
 
-const PromptCardList = ({ data, handleTagClick }) => {
+const PromptCardList = ({ data, handleTagClick, handleStar }) => {
   return (
     <div className='mt-16 prompt_layout'>
       {data.map((post) => (
@@ -13,6 +14,7 @@ const PromptCardList = ({ data, handleTagClick }) => {
           key={post._id}
           post={post}
           handleTagClick={handleTagClick}
+          handleStar={handleStar}
         />
       ))}
     </div>
@@ -24,16 +26,64 @@ const Feed = () => {
 
   // Data constants
   const [posts, setPosts] = useState([])
+  const [favouritesData, setFavouritesData] = useState([])
 
   // Search states
   const [searchText, setSearchText] = useState('')
   const [searchTimeout, setSearchTimeout] = useState(null)
   const [searchedResults, setSearchedResults] = useState([])
 
+  // AlertDialog state
+  const [isAlertOpen, setIsAlertOpen] = useState(false)
+
   const handleTagClick = (tag) => {
     console.log(tag)
     setSearchText(tag)
     setSearchedResults(filterPrompts(tag))
+  }
+
+  const handleStar = async (post) => {
+
+    if (!session?.user.id) {
+      // Show alert dialog if no session exists
+      setIsAlertOpen(true);
+      return; // Early exit if there's no session
+    }
+
+    const promptId = post._id;
+
+    const isFavourited = favouritesData.some(fav => fav._id === promptId);
+    const updatedFavourites = isFavourited 
+      ? favouritesData.filter(fav => fav._id !== promptId)
+      : [...favouritesData, {...post, favourite: true}];
+
+    setFavouritesData(updatedFavourites);
+
+    // Update posts state by toggling the favourite status of the specific post
+    setPosts(() => posts.map(post => 
+      post._id === promptId 
+      ? { ...post, favourite: !isFavourited } 
+      : post
+    ));
+
+    try {
+      const response = await fetch(`/api/users/${session?.user.id}/favourite`, {
+        method: "PATCH",
+        body: JSON.stringify({ promptId })
+      })
+
+    } catch (error) {
+      console.log(error)
+      // Rollback if the request fails
+      setFavouritesData(isFavourited ? [...favouritesData, {...post, favourite: true}] : favouritesData.filter(fav => fav._id !== promptId));
+
+      // Rollback `posts` to reflect the initial `favourite` state of the specific post
+      setPosts(posts.map(post => 
+        post._id === promptId 
+        ? { ...post, favourite: isFavourited }  // Rollback to initial state
+        : post
+      ));
+    }
   }
 
   // Handles changes in the search bar
@@ -52,6 +102,10 @@ const Feed = () => {
     )
   }
 
+  const handleSetIsAlertOpen = (open) => {
+    setIsAlertOpen(open)
+  }
+
   const filterPrompts = (searchtext) => {
     const regex = RegExp(searchtext, 'i') // i flag makes this case-insensitive
 
@@ -63,37 +117,38 @@ const Feed = () => {
     )
   }
 
-  const fetchPosts = async () => {
+  const fetchData = async () => {
+    
     try {
-      const response = await fetch('/api/prompt');
-      const postsData = await response.json();
-      
-      // Fetch user favourites after fetching posts
-      const userFavsResponse = await fetch(`/api/users/${session?.user.id}/favourites`);
-      const favouritesData = await userFavsResponse.json();
-      
-      // Map over posts and add `favourite` key
-      const updatedPosts = postsData.map(post => ({
-        ...post,
-        favourite: favouritesData.some(fav => fav._id === post._id) // Check if post._id is in favourites array
-      }));
-      
-      console.log("Updated Posts: ", updatedPosts);
-      console.log("Favourites: ", favouritesData);
+      // Fetch posts
+      const postsResponse = await fetch('/api/prompt');
+      const postsData = await postsResponse.json();
   
-      // Set the posts with the updated favourite key
-      setPosts(updatedPosts);
+      setPosts(postsData);
+  
+      if (session?.user.id) {
+        // Fetch favourites if session exists
+        const userFavsResponse = await fetch(`/api/users/${session.user.id}/favourites`);
+        const favouritesData = await userFavsResponse.json();
+        setFavouritesData(favouritesData);
+  
+        // Update the favourite status of posts
+        const updatedPosts = postsData.map(post => ({
+          ...post,
+          favourite: favouritesData.some(fav => fav._id === post._id)
+        }));
+        
+        setPosts(updatedPosts);
+      }
     } catch (error) {
-      console.error('Error fetching posts or favourites:', error);
+      console.error('Error fetching data:', error);
     }
   };
-
-  // Run when the feed object is mounted
+  
+  // Fetch posts and favourites when the session changes
   useEffect(() => {
-    if (session?.user.id) {
-      fetchPosts();
-    }
-  }, [session?.user.id])
+    fetchData();
+  }, [session?.user.id]);
 
   return (
     <section className='feed'>
@@ -125,13 +180,17 @@ const Feed = () => {
         <PromptCardList 
           data={searchedResults}
           handleTagClick={handleTagClick}
+          handleStar={handleStar}
         />
       ) : (
         <PromptCardList 
           data={posts}
           handleTagClick={handleTagClick}
+          handleStar={handleStar}
         />
       )}
+
+      <SignInDialog isAlertOpen={isAlertOpen} setIsAlertOpen={handleSetIsAlertOpen} />
     </section>
   )
 }

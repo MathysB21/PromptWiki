@@ -1,6 +1,6 @@
 import PromptCard from "./PromptCard";
 
-const Profile = ({ name, desc, data, favourites, handleEdit, handleDelete }) => {
+const Profile = ({ name, desc, data, favourites, handleEdit, handleDelete, handleStar }) => {
   return (
     <section className='w-full'>
       <h1 className='text-left head_text'>
@@ -19,9 +19,10 @@ const Profile = ({ name, desc, data, favourites, handleEdit, handleDelete }) => 
               <PromptCard
                 key={index}
                 post={post}
-                favourited={true}
+                favourited={post.favourite}
                 handleEdit={() => handleEdit && handleEdit(post)}
                 handleDelete={() => handleDelete && handleDelete(post)}
+                handleStar={handleStar}
               />
             ))}
           </div>
@@ -36,10 +37,11 @@ const Profile = ({ name, desc, data, favourites, handleEdit, handleDelete }) => 
         {data && data.map((post) => (
           <PromptCard
             key={post._id}
-            favourited={favourites.includes(post._id)}
+            favourited={post.favourite}
             post={post}
             handleEdit={() => handleEdit && handleEdit(post)}
             handleDelete={() => handleDelete && handleDelete(post)}
+            handleStar={handleStar}
           />
         ))}
       </div>
