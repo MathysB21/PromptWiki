@@ -12,18 +12,18 @@ PromptWiki is a React and Next.js-powered web application designed for enthusias
 - Responsive Design: Optimized for desktops and mobile devices.
 
 ## 🏆 Tech Stack
-- Frontend: React, Next.js
-- Backend: MongoDB (Database)
-- Authentication: Google OAuth via NextAuth.js
-- Deployment: Hosted on Vercel
+- Frontend: ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB), ![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white) 
+- Backend: ![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white) (Database)
+- Authentication: ![Google Cloud](https://img.shields.io/badge/GoogleCloud-%234285F4.svg?style=for-the-badge&logo=google-cloud&logoColor=white) OAuth via NextAuth.js
+- Deployment: Hosted on ![Vercel](https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white) 
 
 ## ⛓ Getting Started
 To get a local copy of PromptWiki up and running, follow these steps.
 
 ### Prerequisites
-- Node.js
-- MongoDB (locally or cloud-based like MongoDB Atlas)
-- Google Cloud Console account for handling auth
+- ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white) 
+- ![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white) (locally or cloud-based like MongoDB Atlas)
+- ![Google Cloud](https://img.shields.io/badge/GoogleCloud-%234285F4.svg?style=for-the-badge&logo=google-cloud&logoColor=white) Console account for handling auth
 
 ## 🛠 Installation
 Clone the repository
@@ -45,9 +45,13 @@ Create a .env file in the root directory and add the following (replacing placeh
 
 ```plaintext
 MONGODB_URI=your_mongodb_connection_string
+
+GOOGLE_ID=your_google_id
+GOOGLE_CLIENT_SECRET=your_google_secret
+ 
 NEXTAUTH_URL=http://localhost:3000
-GOOGLE_CLIENT_ID=your_google_client_id
-GOOGLE_CLIENT_SECRET=your_google_client_secret
+NEXTAUTH_URL_INTERNAL=http://localhost:3000
+NEXTAUTH_SECRET=your_next_auth_secret
 ```
 
 ### Run the development server
