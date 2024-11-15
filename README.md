@@ -1,41 +1,83 @@
+[![PromptWiki Landing](https://i.ibb.co/gRvjmhh/Prompt-Wiki-Landing2.png)](https://ibb.co/6WvnrLL)
+
 # PromptWiki
-Wiki for cool prompts. Create an account, share prompts and have access to hundreds of well thought-out prompts at your fingertips.
+PromptWiki is a React and Next.js-powered web application designed for enthusiasts of creative writing, AI prompts, and text generation. This platform allows users to explore, create, and favorite AI-driven prompts, offering a clean, intuitive interface for generating inspiration. Create an account, share prompts and have access to hundreds of well thought-out prompts at your fingertips.
 
 Disclaimer: I built this as a project by following the guidance of JSMastery on YouTube. All of the code was manually typed, nothing was pulled or copied as this was an exercise to learn React and Next.JS. I, of course, added my own spice to the project by adding better search functionality, styling, favouriting and multi-tagging as features and extras to further demonstrate my understanding and sharpen my skills.
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Features
+User Authentication: Secure login with Google OAuth for a personalized experience.
+Prompt Creation and Saving: Easily create new prompts and save your favorites for later.
+Explore Community Prompts: Browse prompts created by others to get inspired or contribute your own.
+Responsive Design: Optimized for desktops and mobile devices.
+
+## Tech Stack
+Frontend: React, Next.js
+Backend: MongoDB (Database), Supabase (Auth & BaaS)
+Authentication: Google OAuth via NextAuth.js
+Deployment: Hosted on Vercel
 
 ## Getting Started
+To get a local copy of PromptWiki up and running, follow these steps.
 
-First, run the development server:
+### Prerequisites
+Node.js
+MongoDB (locally or cloud-based like MongoDB Atlas)
+Supabase account for handling auth and storage
+
+## Installation
+Clone the repository
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/MathysB21/promptwiki.git
+cd promptwiki
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Install dependencies
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+```bash
+Copy code
+npm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Set up environment variables
 
-## Learn More
+Create a .env file in the root directory and add the following (replacing placeholders with actual values):
 
-To learn more about Next.js, take a look at the following resources:
+```plaintext
+MONGODB_URI=your_mongodb_connection_string
+NEXTAUTH_URL=http://localhost:3000
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Run the development server
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```bash
+Copy code
+npm run dev
+```
 
-## Deploy on Vercel
+Open http://localhost:3000 to view it in the browser.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Usage
+Explore Prompts: Browse existing prompts from the community.
+Sign In: Log in with your Google account to save and favorite prompts.
+Create New Prompts: Add your own prompts for others to explore.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Contributing
+Contributions are welcome! If you'd like to help improve PromptWiki, please follow these steps:
+
+1. Fork the repository.
+2. Create a new branch (git checkout -b feature/AmazingFeature).
+3. Commit your changes (git commit -m 'Add AmazingFeature').
+4. Push to the branch (git push origin feature/AmazingFeature).
+5. Open a pull request.
+
+## License
+This project is licensed under the MIT License. See the LICENSE file for details.
+
+## Contact
+Mathys Basson
+GitHub | LinkedIn <!-- Optional: add LinkedIn or other contact details -->
+![Email](mailto:pieterm.basson@gmail.com) ![LinkedIn](https://www.linkedin.com/in/mathys-basson-8b2730228/)
