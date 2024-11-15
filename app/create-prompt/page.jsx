@@ -21,9 +21,7 @@ const CreatePrompt = () => {
         setSubmitting(true);
 
         try {
-            console.log(`Tags before being formatted: ${post.tags}, ${typeof post.tags}`)
             const formattedTags = post.tags.split('#').map(tag => tag.trim()).filter(tag => tag !== '').map(tag => `#${tag}`);
-            console.log(formattedTags)
             const response = await fetch('/api/prompt/new', {
                 method: "POST",
                 body: JSON.stringify({

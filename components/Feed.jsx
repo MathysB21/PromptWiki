@@ -37,7 +37,6 @@ const Feed = () => {
   const [isAlertOpen, setIsAlertOpen] = useState(false)
 
   const handleTagClick = (tag) => {
-    console.log(tag)
     setSearchText(tag)
     setSearchedResults(filterPrompts(tag))
   }
