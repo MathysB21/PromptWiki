@@ -1,4 +1,4 @@
-![PromptWiki Landing]('/public/assets/images/PromptWikiLanding2.png')
+![PromptWiki Landing](/assets/images/PromptWikiLanding2.png)
 
 # PromptWiki
 PromptWiki is a React and Next.js-powered web application designed for enthusiasts of creative writing, AI prompts, and text generation. This platform allows users to explore, create, and favorite AI-driven prompts, offering a clean, intuitive interface for generating inspiration. Create an account, share prompts and have access to hundreds of well thought-out prompts at your fingertips.
