@@ -5,12 +5,16 @@ import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 
 import Profile from '@components/Profile'
+import DeleteDialog from '@components/DeleteDialog'
 
 const MyProfile = () => {
     const { data: session } = useSession()
     const router = useRouter();
     const [posts, setPosts] = useState([])
     const [favourites, setFavourites] = useState([])
+
+    const [isAlertOpen, setIsAlertOpen] = useState(false);
+    const [postToDelete, setPostToDelete] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -50,23 +54,32 @@ const MyProfile = () => {
         router.push(`/update-prompt?id=${post._id}`)
     }
 
-    const handleDelete = async (post) => {
-        const hasConfirmed = confirm("Are you sure you want to delete this prompt?");
+    const handleDelete = async () => {
+        if (!postToDelete) return;
 
-        if (hasConfirmed) {
-            try {
-                await fetch(`/api/prompt/${post._id.toString()}`, {
-                    method: 'DELETE'
-                });
+        try {
+            await fetch(`/api/prompt/${postToDelete._id.toString()}`, {
+                method: 'DELETE'
+            });
 
-                const filteredPosts = posts.filter((p) => p._id !== post._id)
+            const filteredPosts = posts.filter((p) => p._id !== postToDelete._id)
+            setPosts(filteredPosts);
 
-                setPosts(filteredPosts)
-            } catch (error) {
-                console.log(error)
-            }
+            const filteredFavourites = favourites.filter((p) => p._id !== postToDelete._id)
+            setFavourites(filteredFavourites)
+
+            setPostToDelete(null);
+            setIsAlertOpen(false);
+        } catch (error) {
+            console.log(error)
+            setIsAlertOpen(false);
         }
     }
+
+    const handleOpenDeleteDialog = (post) => { 
+        setPostToDelete(post); 
+        setIsAlertOpen(true); 
+    };
 
     const handleStar = async (post) => {
 
@@ -109,15 +122,18 @@ const MyProfile = () => {
     };
 
     return (
-        <Profile 
-            name="My"
-            desc="Welcome to your personal profile page"
-            data={posts}
-            favourites={favourites}
-            handleEdit={handleEdit}
-            handleDelete={handleDelete}
-            handleStar={handleStar}
-        />
+        <>
+            <Profile
+                name="My"
+                desc="Welcome to your personal profile page"
+                data={posts}
+                favourites={favourites}
+                handleEdit={handleEdit}
+                handleDelete={handleOpenDeleteDialog}
+                handleStar={handleStar}
+            />
+            <DeleteDialog isAlertOpen={isAlertOpen} setIsAlertOpen={setIsAlertOpen} handleDelete={handleDelete} />
+        </>
     )
 }
 
