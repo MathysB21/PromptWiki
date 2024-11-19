@@ -1,13 +1,13 @@
 ![PromptWiki Landing](/public/assets/images/PromptWikiLanding2.png)
 
 # PromptWiki
-PromptWiki is a React and Next.js-powered web application designed for enthusiasts of creative writing, AI prompts, and text generation. This platform allows users to explore, create, and favorite AI-driven prompts, offering a clean, intuitive interface for generating inspiration. Create an account, share prompts and have access to hundreds of well thought-out prompts at your fingertips.
+PromptWiki is a React and Next.js-powered web application designed for enthusiasts of creative writing, AI prompts, and text generation. This platform allows users to explore, create, and favourite AI-driven prompts, offering a clean, intuitive interface for generating inspiration. Create an account, share prompts, and have access to hundreds of well-thought-out prompts at your fingertips.
 
-> **Disclaimer**: I built this as a project by following the guidance of JSMastery on YouTube. All of the code was manually typed, nothing was pulled or copied as this was an exercise to learn React and Next.JS. I, of course, added my own spice to the project by adding better search functionality, styling, favouriting and multi-tagging as features and extras to further demonstrate my understanding and sharpen my skills.
+> **Disclaimer**: I built this as a project by following the guidance of JSMastery on YouTube. All of the code was manually typed; nothing was pulled or copied, as this was an exercise to learn React and Next.JS. Of course, I added my own spice to the project by adding better search functionality, styling, favouriting, and multi-tagging as features and extras to further demonstrate my understanding and sharpen my skills.
 
 ## ✨ Features
 - User Authentication: Secure login with Google OAuth for a personalized experience.
-- Prompt Creation and Saving: Easily create new prompts and save your favorites for later.
+- Prompt Creation and Saving: Easily create new prompts and save your favourites for later.
 - Explore Community Prompts: Browse prompts created by others to get inspired or contribute your own.
 - Responsive Design: Optimized for desktops and mobile devices.
 
@@ -15,7 +15,7 @@ PromptWiki is a React and Next.js-powered web application designed for enthusias
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB) ![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white) ![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white) ![Google Cloud](https://img.shields.io/badge/GoogleCloud-%234285F4.svg?style=for-the-badge&logo=google-cloud&logoColor=white) ![Vercel](https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white) 
 
 ## ⛓ Getting Started
-To get a local copy of PromptWiki up and running, follow these steps.
+Follow these steps to get a local copy of PromptWiki up and running.
 
 ### Prerequisites
 ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white) 
@@ -65,7 +65,7 @@ Open http://localhost:3000 to view it in the browser.
 
 ## 👓 Usage
 - Explore Prompts: Browse existing prompts from the community.
-- Sign In: Log in with your Google account to save and favorite prompts.
+- Sign In: Log in with your Google account to save and favourite prompts.
 - Create New Prompts: Add your own prompts for others to explore.
 
 ## 🎯 Contributing
@@ -76,6 +76,12 @@ Contributions are welcome! If you'd like to help improve PromptWiki, please foll
 3. Commit your changes (git commit -m 'Add AmazingFeature').
 4. Push to the branch (git push origin feature/AmazingFeature).
 5. Open a pull request.
+
+### ✅ To-do List
+- [ ] Add favicon
+- [ ] Add private and public functionality to prompts
+- [ ] Add pagination to feed
+- [ ] Add styling stability to the profile page (elements jump around before data is fully loaded)
 
 ## 📃 License
 This project is licensed under the MIT License. See the LICENSE file for details.
